@@ -40,8 +40,30 @@
   }
 </style>
 
-<button></button>
+<button>click only once!</button>
 <script>
+  // capture: events are triggered starting with parent, then to children
+  // bubbling: events are triggered on target element, then upwards to parents
+  // stopPropagation will run event
+  // bubbling is not necessarily bad, no need to stop it unless the specific situation calls for it
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelectorAll('button');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    //e.stopPropagation(); // stops bubbling
+  }
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true
+  }));
+
+  button.forEach(button => button.addEventListener('click', () => {
+    console.log('Click!!!');
+  }, {
+    once:true
+  }
+  ));
 
 </script>
 </body>
