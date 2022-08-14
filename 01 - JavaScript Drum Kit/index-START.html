@@ -59,6 +59,27 @@
 
 <script>
 
+
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key='${e.keyCode}']`); // select element for specific key hit
+    const key = document.querySelector(`.key[data-key='${e.keyCode}']`);
+    if(!audio) return; // only allowed keys will trigger function
+    audio.currentTime = 0; // start audio from beginning on keydown
+    audio.play(); // play audio assinged to that key code
+    key.classList.add('playing') // add key to .playing class
+  };
+
+  // removes transition effect by removing element from specified class
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+    this.classList.remove('playing')
+  }
+  
+  //
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+
 </script>
 
 
